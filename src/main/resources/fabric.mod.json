@@ -8,8 +8,9 @@
 		"chenjunfu2"
 	],
 	"contact": {
-		"homepage": "NULL",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/chenjunfu2/carpet-sorter-addition",
+		"issues": "https://github.com/chenjunfu2/carpet-sorter-addition/issues",
+		"sources": "https://github.com/chenjunfu2/carpet-sorter-addition"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/carpet-sorter-addition/icon.png",
@@ -32,6 +33,7 @@
 	"depends": {
 		"fabricloader": ">=0.14.24",
 		"minecraft": "~1.20.1",
+		"carpet": ">=1.4.112",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
