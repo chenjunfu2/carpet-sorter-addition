@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "carpet-sorter-addition",
+	"version": "${version}",
+	"name": "Carpet Sorter Addition",
+	"description": "This is a Carpet fake player sorting addon mod.",
+	"authors": [
+		"chenjunfu2"
+	],
+	"contact": {
+		"homepage": "NULL",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/carpet-sorter-addition/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"chenjunfu2.carpetsorteraddition.CarpetSorterAddition"
+		],
+		"client": [
+			"chenjunfu2.carpetsorteraddition.CarpetSorterAdditionClient"
+		]
+	},
+	"mixins": [
+		"carpet-sorter-addition.mixins.json",
+		{
+			"config": "carpet-sorter-addition.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.24",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
