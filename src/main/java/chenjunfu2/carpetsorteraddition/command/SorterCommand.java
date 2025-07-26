@@ -20,7 +20,7 @@ public class SorterCommand
 				.executes(context ->
 				{
 					CarpetSorterAddition.LOGGER.info("cmd sorter");
-					context.getSource().sendFeedback(()-> Text.of(ModTranslations.tr(CarpetSorterAddition.MOD_ABBR, "command.sotter.success")), true);
+					context.getSource().sendFeedback(()-> Text.of(ModTranslations.tr(CarpetSorterAddition.MOD_ABBR, "command.sorter.success")), true);
 					return 1;
 				})
 		);
