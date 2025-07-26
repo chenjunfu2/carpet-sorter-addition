@@ -2,8 +2,8 @@ package chenjunfu2.carpetsorteraddition.carpet;
 
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
-import carpet.utils.Translations;
 import chenjunfu2.carpetsorteraddition.CarpetSorterAddition;
+import chenjunfu2.carpetsorteraddition.translations.ModTranslations;
 
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class CarpetSorterExtension implements CarpetExtension
 	@Override
 	public Map<String, String> canHasTranslations(String lang)//注册语言
 	{
-		return Translations.getTranslationFromResourcePath("assets/carpet-sorter-addition/lang/%s.json".formatted(lang));//gradlew插件会把yml转换到json
+		return ModTranslations.updateTranslations("assets/carpet-sorter-addition/lang/%s.json".formatted(lang));//gradlew插件会把yml转换到json
 	}
 	
 	@Override

@@ -1,8 +1,13 @@
 carpet:
   category:
-    CSA: 假人分类
+    csa: 假人分类
 
   rule:
     fakePlayerSorter:
       name: 假人分类
       desc: 开关假人分类功能
+
+csa:
+  command:
+    sorter:
+      success: 执行成功
