@@ -4,21 +4,24 @@ import carpet.CarpetExtension;
 import carpet.CarpetServer;
 import carpet.api.settings.CarpetRule;
 import carpet.api.settings.SettingsManager;
+import carpet.utils.Translations;
 import chenjunfu2.carpetsorteraddition.CarpetSorterAddition;
 import net.minecraft.server.command.ServerCommandSource;
+
+import java.util.Map;
 
 public class CarpetSorterExtension implements CarpetExtension
 {
 	private static final SettingsManager CSESettingsManager = new SettingsManager(CarpetSorterAddition.version, CarpetSorterAddition.MOD_ABBR, CarpetSorterAddition.MOD_NAME);
 	private static final CarpetSorterExtension INSTANCE = new CarpetSorterExtension();
 	
-	public static void init()
+	public static void init()//初始化（注册自身）
 	{
 		CarpetServer.manageExtension(INSTANCE);
 		SettingsManager.registerGlobalRuleObserver(INSTANCE::ruleChanged);
 	}
 	
-	public void ruleChanged(ServerCommandSource source, CarpetRule<?> changedRule, String userInput)
+	public void ruleChanged(ServerCommandSource source, CarpetRule<?> changedRule, String userInput)//规则修改回调
 	{
 		if (changedRule.settingsManager() != CSESettingsManager)
 		{
@@ -29,7 +32,13 @@ public class CarpetSorterExtension implements CarpetExtension
 	}
 	
 	@Override
-	public void onGameStarted()
+	public Map<String, String> canHasTranslations(String lang)//注册语言
+	{
+		return Translations.getTranslationFromResourcePath("assets/carpet-sorter-addition/lang/%s.json".formatted(lang));
+	}
+	
+	@Override
+	public void onGameStarted()//注册规则
 	{
 		CSESettingsManager.parseSettingsClass(CarpetSorterExtensionSettings.class);
 	}
@@ -41,7 +50,7 @@ public class CarpetSorterExtension implements CarpetExtension
 	}
 	
 	@Override
-	public String version()
+	public String version()//注册版本
 	{
 		return CarpetSorterAddition.version;
 	}

@@ -1,6 +1,12 @@
 plugins {
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
+	id 'me.fallenbreath.yamlang' version '1.4.1'//自动转换yaml到json语言文件
+}
+
+yamlang {//配置yaml自动转换插件
+	targetSourceSets = [sourceSets.main]
+	inputDir = "assets/carpet-sorter-addition/lang"
 }
 
 version = project.mod_version

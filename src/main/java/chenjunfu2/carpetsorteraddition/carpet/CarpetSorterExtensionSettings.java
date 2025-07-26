@@ -14,5 +14,5 @@ public class CarpetSorterExtensionSettings
 		//conditions = {xxx.class}//自定义注册验证器
 		//appSource = "xxx"//关联xxx.sc的scarpet脚本
 	)
-	public static boolean fakePlayerSorter = false;
+	public static boolean fakePlayerSorter = false;//必须要public static，否则"obj" is null爆炸警告
 }
