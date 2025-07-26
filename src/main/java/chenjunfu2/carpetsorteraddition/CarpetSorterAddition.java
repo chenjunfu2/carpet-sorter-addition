@@ -6,7 +6,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CarpetSorterAddition implements ModInitializer {
+public class CarpetSorterAddition implements ModInitializer
+{
 	public static final String MOD_ID = "carpet-sorter-addition";
 	public static final String MOD_NAME = "Carpet Sorter Addition";
 	public static final String MOD_ABBR = "CSA";

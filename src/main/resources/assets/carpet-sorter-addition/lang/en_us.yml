@@ -1,6 +1,6 @@
-CSA:
+carpet:
   category:
-    CSA: CSA
+    CSA: 假人分类
 
   rule:
     fakePlayerSorter:
