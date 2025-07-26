@@ -31,7 +31,7 @@ public class CarpetSorterExtension implements CarpetExtension
 	@Override
 	public Map<String, String> canHasTranslations(String lang)//注册语言
 	{
-		return Translations.getTranslationFromResourcePath("assets/carpet-sorter-addition/lang/%s.json".formatted(lang));
+		return Translations.getTranslationFromResourcePath("assets/carpet-sorter-addition/lang/%s.json".formatted(lang));//gradlew插件会把yml转换到json
 	}
 	
 	@Override
