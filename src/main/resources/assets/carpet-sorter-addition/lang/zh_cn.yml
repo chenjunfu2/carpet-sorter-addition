@@ -1,0 +1,8 @@
+CSA:
+  category:
+    CSA: CSA
+
+  rule:
+    fakePlayerSorter:
+      name: 假人分类
+      desc: 开关假人分类功能
