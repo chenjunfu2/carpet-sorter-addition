@@ -1,7 +1,8 @@
 plugins {
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
-	id 'me.fallenbreath.yamlang' version '1.4.1'//自动转换yaml到json语言文件
+	id 'me.fallenbreath.yamlang' version '1.4.1'
+	id 'org.jetbrains.kotlin.jvm'//自动转换yaml到json语言文件
 }
 
 yamlang {//配置yaml自动转换插件
@@ -24,6 +25,7 @@ repositories {
 	// for more information about repositories.
 	maven { url "https://maven.fabricmc.net/" }
 	maven { url 'https://masa.dy.fi/maven' }
+	mavenCentral()
 }
 
 loom {
@@ -49,6 +51,7 @@ dependencies {
 
 	// fabric-carpet
 	modImplementation "carpet:fabric-carpet:${project.carpet_version}"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 processResources {
@@ -69,8 +72,6 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
@@ -97,4 +98,7 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+kotlin {
+	jvmToolchain(17)
 }

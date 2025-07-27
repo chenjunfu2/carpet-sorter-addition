@@ -2,8 +2,12 @@ package chenjunfu2.carpetsorteraddition.carpet;
 
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
+import carpet.api.settings.CarpetRule;
+import carpet.api.settings.SettingsManager;
 import chenjunfu2.carpetsorteraddition.CarpetSorterAddition;
+import chenjunfu2.carpetsorteraddition.command.SorterCommand;
 import chenjunfu2.carpetsorteraddition.translations.ModTranslations;
+import net.minecraft.server.command.ServerCommandSource;
 
 import java.util.Map;
 
@@ -15,18 +19,19 @@ public class CarpetSorterExtension implements CarpetExtension
 	public static void init()//初始化（注册自身）
 	{
 		CarpetServer.manageExtension(INSTANCE);
-		//SettingsManager.registerGlobalRuleObserver(INSTANCE::ruleChanged);
+		SettingsManager.registerGlobalRuleObserver(INSTANCE::ruleChanged);
 	}
 	
-	//public void ruleChanged(ServerCommandSource source, CarpetRule<?> changedRule, String userInput)//规则修改回调
-	//{
-	//	//if (changedRule.settingsManager() != CSESettingsManager)
-	//	//{
-	//	//	return;
-	//	//}
-	//
-	//	CarpetSorterAddition.LOGGER.info("ruleChanged call");
-	//}
+	public void ruleChanged(ServerCommandSource source, CarpetRule<?> changedRule, String userInput)//规则修改回调
+	{
+		if (!changedRule.categories().contains(CarpetSorterAddition.MOD_ABBR))//如果当前规则集不属于本mod则忽略
+		{
+			return;
+		}
+	
+		CarpetSorterAddition.LOGGER.info("CarpetSorterExtensionSettings ruleChanged call");
+		SorterCommand.ruleChanged(source, changedRule, userInput);
+	}
 	
 	@Override
 	public Map<String, String> canHasTranslations(String lang)//注册语言

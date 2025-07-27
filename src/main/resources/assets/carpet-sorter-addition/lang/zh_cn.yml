@@ -10,4 +10,4 @@ carpet:
 csa:
   command:
     sorter:
-      success: 执行成功
+      success: "执行成功:%d"
