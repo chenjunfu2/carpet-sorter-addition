@@ -1,7 +1,7 @@
 package chenjunfu2.carpetsorteraddition;
 
 import chenjunfu2.carpetsorteraddition.carpet.CarpetSorterExtension;
-import chenjunfu2.carpetsorteraddition.command.SorterCommand;
+import chenjunfu2.carpetsorteraddition.command.ModCommand;
 import chenjunfu2.carpetsorteraddition.translations.ModTranslations;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -27,7 +27,7 @@ public class CarpetSorterAddition implements ModInitializer
 		//注册为地毯附属（注册carpet规则、命令、翻译等）
 		CarpetSorterExtension.init();
 		//注册自定义命令
-		CommandRegistrationCallback.EVENT.register(SorterCommand::register);
+		CommandRegistrationCallback.EVENT.register(ModCommand::register);
 		
 		
 	}

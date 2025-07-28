@@ -5,7 +5,7 @@ import carpet.CarpetServer;
 import carpet.api.settings.CarpetRule;
 import carpet.api.settings.SettingsManager;
 import chenjunfu2.carpetsorteraddition.CarpetSorterAddition;
-import chenjunfu2.carpetsorteraddition.command.SorterCommand;
+import chenjunfu2.carpetsorteraddition.command.ModCommand;
 import chenjunfu2.carpetsorteraddition.translations.ModTranslations;
 import net.minecraft.server.command.ServerCommandSource;
 
@@ -30,7 +30,7 @@ public class CarpetSorterExtension implements CarpetExtension
 		}
 	
 		CarpetSorterAddition.LOGGER.info("CarpetSorterExtensionSettings ruleChanged call");
-		SorterCommand.ruleChanged(source, changedRule, userInput);
+		ModCommand.ruleChanged(source, changedRule, userInput);
 	}
 	
 	@Override
