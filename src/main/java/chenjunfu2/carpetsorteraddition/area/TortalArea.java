@@ -16,9 +16,9 @@ public class TortalArea
 	private final BlockPos posEnd;//区域对角坐标
 	private final Box areaBox;//区域边界框
 	
-	private HashMap<String, SubArea> subAreaList;
+	private HashMap<String, SubArea> subAreaList;//按名称的映射
 	private HashMap<AreaAttribute, HashSet<String>> subAreaAttrList;//按功能分区的子区域列表，用于快速查找
-	private HashSet<UUID> areaFakePlayerList;
+	private HashSet<UUID> areaSorterPlayerList;
 	
 	private TortalArea(BlockPos posBeg, BlockPos posEnd)
 	{
@@ -27,7 +27,7 @@ public class TortalArea
 		this.areaBox = new Box(this.posBeg,this.posEnd);
 		this.subAreaList = new HashMap<>();
 		this.subAreaAttrList = new HashMap<>();
-		this.areaFakePlayerList = new HashSet<>();
+		this.areaSorterPlayerList = new HashSet<>();
 	}
 	
 	public static TortalArea CreateArea(BlockPos posBeg, BlockPos posEnd)
@@ -40,19 +40,19 @@ public class TortalArea
 		return new TortalArea(posBeg, posEnd);
 	}
 	
-	public boolean AddFakePlayerToArea(UUID playerUUID)
+	public boolean AddSorterPlayerToArea(UUID playerUUID)
 	{
-		return this.areaFakePlayerList.add(playerUUID);
+		return this.areaSorterPlayerList.add(playerUUID);
 	}
 	
-	public boolean RemoveFakePlayerFromArea(UUID playerUUID)
+	public boolean RemoveSorterPlayerFromArea(UUID playerUUID)
 	{
-		return this.areaFakePlayerList.remove(playerUUID);
+		return this.areaSorterPlayerList.remove(playerUUID);
 	}
 	
-	public HashSet<UUID> getAreaFakePlayerList()
+	public HashSet<UUID> getAreaSorterPlayerList()
 	{
-		return this.areaFakePlayerList;
+		return this.areaSorterPlayerList;
 	}
 	
 	BlockPos getPosBeg()

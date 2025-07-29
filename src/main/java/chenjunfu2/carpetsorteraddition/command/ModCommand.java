@@ -21,7 +21,6 @@ public class ModCommand
 	{
 		dispatcher.register(
 				literal("sorter")
-				//.requires(source -> ModCommand.isRuleEnabled(source, CarpetSorterExtensionSettings.fakePlayerSorter))
 				.requires(source -> CommandHelper.canUseCommand(source, CarpetSorterExtensionSettings.fakePlayerSorter))
 				.then(argument("start", IntegerArgumentType.integer())
 				.executes(context ->
