@@ -2,10 +2,9 @@ package chenjunfu2.carpetsorteraddition.area;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class TortalArea
 {
@@ -16,7 +15,10 @@ public class TortalArea
 	private final BlockPos posBeg;
 	private final BlockPos posEnd;//区域对角坐标
 	private final Box areaBox;//区域边界框
-	private HashMap<AreaAttribute,List<SubArea>> subAreaList;//按功能分区的子区域列表
+	
+	private HashMap<String, SubArea> subAreaList;
+	private HashMap<AreaAttribute, HashSet<String>> subAreaAttrList;//按功能分区的子区域列表，用于快速查找
+	private HashSet<UUID> areaFakePlayerList;
 	
 	private TortalArea(BlockPos posBeg, BlockPos posEnd)
 	{
@@ -24,6 +26,8 @@ public class TortalArea
 		this.posEnd = posEnd;
 		this.areaBox = new Box(this.posBeg,this.posEnd);
 		this.subAreaList = new HashMap<>();
+		this.subAreaAttrList = new HashMap<>();
+		this.areaFakePlayerList = new HashSet<>();
 	}
 	
 	public static TortalArea CreateArea(BlockPos posBeg, BlockPos posEnd)
@@ -34,6 +38,21 @@ public class TortalArea
 		}
 		
 		return new TortalArea(posBeg, posEnd);
+	}
+	
+	public boolean AddFakePlayerToArea(UUID playerUUID)
+	{
+		return this.areaFakePlayerList.add(playerUUID);
+	}
+	
+	public boolean RemoveFakePlayerFromArea(UUID playerUUID)
+	{
+		return this.areaFakePlayerList.remove(playerUUID);
+	}
+	
+	public HashSet<UUID> getAreaFakePlayerList()
+	{
+		return this.areaFakePlayerList;
 	}
 	
 	BlockPos getPosBeg()
@@ -51,22 +70,80 @@ public class TortalArea
 		return this.areaBox;
 	}
 	
-	HashMap<AreaAttribute,List<SubArea>> getSubAreaList()
+	//返回null：相交or重名
+	public @Nullable SubArea AddSubArea(String subAreaName, AreaAttribute attribute, BlockPos posBeg, BlockPos posEnd)
 	{
-		return this.subAreaList;
-	}
-	
-	public SubArea AddSubArea(AreaAttribute attribute, BlockPos posBeg, BlockPos posEnd)
-	{
-		SubArea subArea = SubArea.CreateArea(this, attribute, posBeg, posEnd);
-		if(subArea == null)
+		//已存在同名，失败
+		if(GetSubArea(subAreaName) != null)
 		{
 			return null;
 		}
 		
-		subAreaList.computeIfAbsent(attribute, k -> new ArrayList<>()).add(subArea);
+		//先判定区域是否在主区域内部
+		Box newSubBox = new Box(posBeg,posEnd);
+		if(!isBoxInside(this.areaBox,newSubBox))//不在，失败
+		{
+			return null;
+		}
 		
-		return subArea;
+		//继续判定是否与现有的任何一个区域重叠
+		for(var it : subAreaList.values())
+		{
+			if(isBoxIntersecting(newSubBox,it.getAreaBox()))
+			{
+				return null;//只要有任意一个相交直接失败
+			}
+		}
+		
+		//没有任何重叠并且在主区域内部（很好，可以执行插入）
+		SubArea newSubArea = SubArea.CreateArea(this, subAreaName, attribute, posBeg, posEnd);
+		subAreaList.put(subAreaName,newSubArea);//放入名称表
+		subAreaAttrList.computeIfAbsent(newSubArea.getAttribute(), k-> new HashSet<>()).add(newSubArea.getName());//属性反查表
+		
+		return newSubArea;
+	}
+	
+	
+	public @Nullable SubArea GetSubArea(String subAreaName)
+	{
+		return this.subAreaList.get(subAreaName);
+	}
+	
+	
+	public @Nullable SubArea RemoveSubArea(String subAreaName)
+	{
+		var removeArea = subAreaList.remove(subAreaName);//从名称查找表移出
+		if(removeArea == null)
+		{
+			return null;
+		}
+		
+		//从属性->名称列表 反查表移出（如果有）
+		var attrSet = subAreaAttrList.get(removeArea.getAttribute());
+		if(attrSet!=null)
+		{
+			attrSet.remove(removeArea.getName());
+			if(attrSet.isEmpty())//如果这是这个属性的最后一个子区域，删除此属性
+			{
+				subAreaAttrList.remove(removeArea.getAttribute());
+			}
+		}
+
+		//返回被删除的子区域
+		return removeArea;
+	}
+	
+	//内部判定
+	private static boolean isBoxInside(Box outer, Box inner)
+	{
+		return outer.contains(inner.minX, inner.minY, inner.minZ) &&
+			   outer.contains(inner.maxX, inner.maxY, inner.maxZ);
+	}
+	
+	//相交判定
+	public static boolean isBoxIntersecting(Box a, Box b)
+	{
+		return a.intersects(b);
 	}
 	
 	private static int CheckArea(Box checkBox)

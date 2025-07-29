@@ -6,34 +6,30 @@ import net.minecraft.util.math.Box;
 public class SubArea
 {
 	private final TortalArea tortalArea;//主区域信息
+	private final String name;//子区域名称
 	private final AreaAttribute attribute;//子区域功能
 	private final BlockPos posBeg;
 	private final BlockPos posEnd;//区域对角坐标
 	private final Box areaBox;//区域边界框
 	
-	private SubArea(TortalArea tortalArea, AreaAttribute attribute, BlockPos posBeg, BlockPos posEnd)
+	private SubArea(TortalArea tortalArea, String name, AreaAttribute attribute, BlockPos posBeg, BlockPos posEnd)
 	{
 		this.tortalArea = tortalArea;
+		this.name = name;
 		this.attribute = attribute;
 		this.posBeg = posBeg;
 		this.posEnd = posEnd;
 		this.areaBox = new Box(this.posBeg,this.posEnd);
 	}
 	
-	public static SubArea CreateArea(TortalArea tortalArea, AreaAttribute attribute, BlockPos posBeg, BlockPos posEnd)
+	public static SubArea CreateArea(TortalArea tortalArea, String name, AreaAttribute attribute, BlockPos posBeg, BlockPos posEnd)
 	{
-		if(!SubArea.isBoxInside(tortalArea.getAreaBox(), new Box(posBeg,posEnd)))
-		{
-			return null;
-		}
-		
-		return new SubArea(tortalArea,attribute,posBeg,posEnd);
+		return new SubArea(tortalArea,name,attribute,posBeg,posEnd);
 	}
 	
-	private static boolean isBoxInside(Box outer, Box inner)
+	String getName()
 	{
-		return outer.contains(inner.minX, inner.minY, inner.minZ) &&
-			   outer.contains(inner.maxX, inner.maxY, inner.maxZ);
+		return this.name;
 	}
 	
 	TortalArea getTortalArea()
