@@ -33,10 +33,4 @@ public class ModCommand
 				}))
 		);
 	}
-	
-	public static void ruleChanged(ServerCommandSource source, CarpetRule<?> changedRule, String userInput)
-	{
-		//updateCommandTree(source.getServer());
-	}
-	
 }

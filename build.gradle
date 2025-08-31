@@ -1,8 +1,8 @@
 plugins {
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
-	id 'me.fallenbreath.yamlang' version '1.4.1'
-	id 'org.jetbrains.kotlin.jvm'//自动转换yaml到json语言文件
+	id 'me.fallenbreath.yamlang' version '1.4.1'//自动转换yaml到json语言文件
+	id 'org.jetbrains.kotlin.jvm'
 }
 
 yamlang {//配置yaml自动转换插件
@@ -72,6 +72,8 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
